@@ -19,7 +19,7 @@ npm test
 
 To preview the static dashboard, open `/dashboard/index.html` in a browser.
 
-The dashboard accepts a `window.POS_BLOCKCHAIN_SNAPSHOT` object for live telemetry and otherwise renders placeholder preview data.
+The dashboard accepts a `window.POS_BLOCKCHAIN_SNAPSHOT` object for live telemetry and otherwise renders placeholder preview data. Set that object before the dashboard script runs, for example with an inline `<script>` tag ahead of the page script.
 
 ## Example
 
@@ -50,5 +50,5 @@ console.log(chain.getDashboardSnapshot());
 
 ## Notes
 
-- The smart-contract VM is a lightweight Node.js `vm`-based reference environment with a short execution timeout by default.
+- The smart-contract VM is a lightweight Node.js `vm`-based reference environment with a bounded execution timeout by default.
 - The AMM uses JavaScript number arithmetic, which is appropriate for this compact reference implementation but not production-grade fixed-point finance.

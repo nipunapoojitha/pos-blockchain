@@ -82,9 +82,9 @@ class P2PNetwork {
 class SmartContractVM {
   /**
    * Executes reference smart-contract code inside a restricted VM context.
-   * The default timeout is intentionally short to keep this demo environment bounded.
+   * The default timeout is intentionally bounded for this demo environment.
    */
-  execute(source, state = {}, { timeout = 10 } = {}) {
+  execute(source, state = {}, { timeout = 100 } = {}) {
     const sandbox = {
       Math,
       Date,
@@ -267,7 +267,7 @@ class ProofOfStakeBlockchain {
     return this.validators.get(address) || 0;
   }
 
-  createTransaction(wallet, to, amount, metadata = {}) {
+  createTransaction(wallet, to, amount, metadata = {}, timestamp = new Date().toISOString()) {
     if (!(wallet instanceof Wallet)) {
       throw new Error('A Wallet instance is required to create transactions.');
     }
@@ -277,7 +277,7 @@ class ProofOfStakeBlockchain {
       to,
       amount,
       metadata,
-      timestamp: new Date().toISOString()
+      timestamp
     };
 
     return {
@@ -375,10 +375,10 @@ class ProofOfStakeBlockchain {
     }
   }
 
-  #createBlock({ previousHash, transactions, validator }) {
+  #createBlock({ previousHash, transactions, validator, timestamp = new Date().toISOString() }) {
     const block = {
       index: this.chain.length,
-      timestamp: new Date().toISOString(),
+      timestamp,
       previousHash,
       validator,
       transactions: clone(transactions)
