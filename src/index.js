@@ -24,6 +24,20 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function normalizeTimestamp(timestamp = new Date().toISOString()) {
+  const parsed = new Date(timestamp);
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error('Timestamp must be a valid ISO-8601 string.');
+  }
+
+  const drift = Math.abs(Date.now() - parsed.getTime());
+  if (drift > 5 * 60 * 1000) {
+    throw new Error('Timestamp must be within five minutes of system time.');
+  }
+
+  return parsed.toISOString();
+}
+
 class Wallet {
   constructor(privateKey, publicKey) {
     this.privateKey = privateKey;
@@ -70,7 +84,7 @@ class P2PNetwork {
       throw new Error('Peer id is required.');
     }
 
-    this.peers.set(peer.id, { ...peer, connectedAt: peer.connectedAt || new Date().toISOString() });
+    this.peers.set(peer.id, { ...peer, connectedAt: new Date().toISOString() });
     return this.peers.get(peer.id);
   }
 
@@ -87,7 +101,6 @@ class SmartContractVM {
   execute(source, state = {}, { timeout = 100 } = {}) {
     const sandbox = {
       Math,
-      Date,
       state: clone(state),
       result: null
     };
@@ -277,7 +290,7 @@ class ProofOfStakeBlockchain {
       to,
       amount,
       metadata,
-      timestamp
+      timestamp: normalizeTimestamp(timestamp)
     };
 
     return {
@@ -378,7 +391,7 @@ class ProofOfStakeBlockchain {
   #createBlock({ previousHash, transactions, validator, timestamp = new Date().toISOString() }) {
     const block = {
       index: this.chain.length,
-      timestamp,
+      timestamp: normalizeTimestamp(timestamp),
       previousHash,
       validator,
       transactions: clone(transactions)
