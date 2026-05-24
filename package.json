@@ -1,0 +1,21 @@
+{
+  "name": "pos-blockchain",
+  "version": "1.0.0",
+  "description": "A next-gen Proof of Stake (PoS) blockchain and DeFi ecosystem built from scratch in pure Node.js.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nipunapoojitha/pos-blockchain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nipunapoojitha/pos-blockchain/issues"
+  },
+  "homepage": "https://github.com/nipunapoojitha/pos-blockchain#readme"
+}
