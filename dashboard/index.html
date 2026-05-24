@@ -130,7 +130,10 @@
           A compact PoS blockchain and DeFi dashboard for validator, liquidity, NFT, and bridge activity.
         </p>
         <p>Preview data is shown until a live blockchain snapshot is injected into the page.</p>
-        <p>Set <code>window.POS_BLOCKCHAIN_SNAPSHOT</code> before this script runs to render live telemetry.</p>
+        <p>
+          Set <code>window.POS_BLOCKCHAIN_SNAPSHOT</code> in an inline script before this page script runs, for
+          example <code>&lt;script&gt;window.POS_BLOCKCHAIN_SNAPSHOT = snapshot;&lt;/script&gt;</code>.
+        </p>
         <div class="grid" id="stats"></div>
       </section>
 

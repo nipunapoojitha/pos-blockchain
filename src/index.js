@@ -96,7 +96,8 @@ class P2PNetwork {
 class SmartContractVM {
   /**
    * Executes reference smart-contract code inside a restricted VM context.
-   * The default timeout is intentionally bounded for this demo environment.
+   * The default 100ms timeout is intentionally bounded for this demo environment
+   * and can be overridden per execution for more complex contracts.
    */
   execute(source, state = {}, { timeout = 100 } = {}) {
     const sandbox = {
@@ -150,6 +151,7 @@ class AutomatedMarketMaker {
 
     const reserveIn = inputIsA ? this.reserveA : this.reserveB;
     const reserveOut = inputIsA ? this.reserveB : this.reserveA;
+    // This reference implementation intentionally uses JavaScript numbers.
     const amountInWithFee = amountIn * (1 - this.fee);
     const amountOut = (amountInWithFee * reserveOut) / (reserveIn + amountInWithFee);
 
