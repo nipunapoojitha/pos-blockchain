@@ -129,6 +129,7 @@
         <p>
           A compact PoS blockchain and DeFi dashboard for validator, liquidity, NFT, and bridge activity.
         </p>
+        <p>Preview data is shown until a live blockchain snapshot is injected into the page.</p>
         <div class="grid" id="stats"></div>
       </section>
 
@@ -144,7 +145,7 @@
     </main>
 
     <script>
-      const snapshot = {
+      const fallbackSnapshot = {
         chainName: 'pos-blockchain',
         totalSupply: 100,
         circulatingSupply: 60,
@@ -159,6 +160,7 @@
           USD: 909.34
         }
       };
+      const snapshot = window.POS_BLOCKCHAIN_SNAPSHOT || fallbackSnapshot;
 
       const stats = [
         ['Chain', snapshot.chainName],

@@ -80,7 +80,7 @@ class P2PNetwork {
 }
 
 class SmartContractVM {
-  execute(source, state = {}, { timeout = 50 } = {}) {
+  execute(source, state = {}, { timeout = 10 } = {}) {
     const sandbox = {
       Math,
       Date,
@@ -199,7 +199,15 @@ class CrossChainBridge {
     }
 
     const transfer = {
-      id: sha256(stableStringify({ asset, amount, owner, sourceChain, targetChain, timestamp: Date.now() })),
+      id: sha256(stableStringify({
+        asset,
+        amount,
+        owner,
+        sourceChain,
+        targetChain,
+        timestamp: Date.now(),
+        nonce: crypto.randomUUID()
+      })),
       asset,
       amount,
       owner,

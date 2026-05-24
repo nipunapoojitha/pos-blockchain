@@ -17,8 +17,10 @@ test('wallets use secp256k1 signatures for transaction validation', () => {
 
   const transaction = chain.createTransaction(wallet, 'receiver', 25, { purpose: 'staking rewards' });
   chain.addTransaction(transaction);
+  chain.stakeTokens(wallet.address, 50);
+  chain.produceBlock(wallet.address);
 
-  assert.equal(chain.pendingTransactions.length, 1);
+  assert.equal(chain.getBalance('receiver'), 25);
   assert.throws(
     () => chain.addTransaction({ ...transaction, amount: 30 }),
     /Invalid transaction signature/
