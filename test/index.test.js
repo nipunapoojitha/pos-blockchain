@@ -11,16 +11,17 @@ const {
 
 test('wallets use secp256k1 signatures for transaction validation', () => {
   const wallet = Wallet.create();
+  const receiver = Wallet.create();
   const chain = new ProofOfStakeBlockchain({
-    genesisBalances: { [wallet.address]: 100, receiver: 0 }
+    genesisBalances: { [wallet.address]: 100, [receiver.address]: 0 }
   });
 
-  const transaction = chain.createTransaction(wallet, 'receiver', 25, { purpose: 'staking rewards' });
+  const transaction = chain.createTransaction(wallet, receiver.address, 25, { purpose: 'staking rewards' });
   chain.addTransaction(transaction);
   chain.stakeTokens(wallet.address, 50);
   chain.produceBlock(wallet.address);
 
-  assert.equal(chain.getBalance('receiver'), 25);
+  assert.equal(chain.getBalance(receiver.address), 25);
   assert.throws(
     () => chain.addTransaction({ ...transaction, amount: 30 }),
     /Invalid transaction signature/

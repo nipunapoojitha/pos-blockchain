@@ -80,6 +80,10 @@ class P2PNetwork {
 }
 
 class SmartContractVM {
+  /**
+   * Executes reference smart-contract code inside a restricted VM context.
+   * The default timeout is intentionally short to keep this demo environment bounded.
+   */
   execute(source, state = {}, { timeout = 10 } = {}) {
     const sandbox = {
       Math,
@@ -273,7 +277,7 @@ class ProofOfStakeBlockchain {
       to,
       amount,
       metadata,
-      timestamp: Date.now()
+      timestamp: new Date().toISOString()
     };
 
     return {
